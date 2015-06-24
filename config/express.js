@@ -4,9 +4,14 @@ var bodyParser = require('body-parser');
 var cloud = require('./cloud');
 var compress = require('compression');
 var methodOverride = require('method-override');
+var session = require('express-session');
 
 module.exports = function () {
     var app = express();
+
+    if(app.get('env') === 'production'){
+        app.use(compress());
+    }
 
     app.set('views', './app/views');
     app.set('view engine', 'ejs');
@@ -17,9 +22,11 @@ module.exports = function () {
     app.use(methodOverride());
     app.use(cookieParser());
 
-    if(app.get('env') === 'production'){
-        app.use(compress());
-    }
+    app.use(session({
+        saveUninitialized: true,
+        resave: true,
+        secret: 'SessionSecret'
+    }));
 
     // 加载云代码方法
     app.use(cloud);
