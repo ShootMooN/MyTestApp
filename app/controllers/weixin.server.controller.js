@@ -1,6 +1,5 @@
 var crypto = require('crypto');
 var config = require('../../config/weixin.js');
-var debug = require('debug')('AV:weixin');
 
 exports.exec = function(params, cb) {
     if (params.signature) {
@@ -14,7 +13,9 @@ exports.exec = function(params, cb) {
 var checkSignature = function(signature, timestamp, nonce, echostr, cb) {
     var oriStr = [config.token, timestamp, nonce].sort().join('')
     var code = crypto.createHash('sha1').update(oriStr).digest('hex');
-    debug('code:', code)
+
+    console.log(code)
+
     if (code == signature) {
         cb(null, echostr);
     } else {

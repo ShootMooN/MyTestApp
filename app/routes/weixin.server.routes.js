@@ -1,6 +1,5 @@
 var weixin = require('../controllers/weixin.server.controller');
 var xml2js = require('xml2js');
-var utils = require('express/node_modules/connect/lib/utils');
 
 // 解析微信的 xml 数据
 var xmlBodyParser = function (req, res, next) {
@@ -14,7 +13,7 @@ var xmlBodyParser = function (req, res, next) {
         return next();
 
     // check Content-Type
-    if ('text/xml' != utils.mime(req))
+    if ('text/xml' != req.headers['content-type'])
         return next();
 
     // flag as parsed
