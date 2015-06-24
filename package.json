@@ -21,6 +21,7 @@
     "compression": "~1.5.0",
     "method-override": "~2.3.3",
     "express-session": "~1.11.3",
+    "xml2js": "~0.4.9",
     "leanengine": "^0.1.0"
   }
 }
