@@ -1,21 +1,21 @@
 var express = require('express');
-var path = require('path');
+//var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cloud = require('./cloud');
-var methodOverride = require('method-override');
+//var methodOverride = require('method-override');
 
 module.exports = function () {
     var app = express();
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json());
-    app.use(methodOverride());
+    //app.use(methodOverride());
     app.use(cookieParser());
 
     // 加载云代码方法
     app.use(cloud);
 
-    if (app.get('env') === 'development') {
+   /* if (app.get('env') === 'development') {
         app.use(function (err, req, res, next) {
             res.status(err.status || 500);
             res.render('error', {
@@ -33,7 +33,7 @@ module.exports = function () {
                 error: {}
             });
         });
-    }
+    }*/
 
     //app.set('views', './app/views');
     //app.set('view engine', 'ejs');
