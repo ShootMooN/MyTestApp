@@ -28,7 +28,7 @@ module.exports = function () {
         secret: 'SessionSecret'
     }));
 
-    // ¼ÓÔØÔÆ´úÂë·½·¨
+    // åŠ è½½äº‘ä»£ç æ–¹æ³•
     app.use(cloud);
 
     require('../app/routes/index.server.routes.js')(app);

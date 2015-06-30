@@ -1,7 +1,7 @@
 var weixin = require('../controllers/weixin.server.controller');
 var xml2js = require('xml2js');
 
-// ½âÎöÎ¢ĞÅµÄ xml Êı¾İ
+// è§£æå¾®ä¿¡çš„ xml æ•°æ®
 var xmlBodyParser = function (req, res, next) {
     if (req._body)
         return next();
@@ -40,6 +40,7 @@ var xmlBodyParser = function (req, res, next) {
 
 module.exports = function (app) {
     app.use('/weixin', xmlBodyParser);
+
     app.get('/weixin', function(req, res) {
         console.log('weixin req:', req.query);
         weixin.exec(req.query, function(err, data) {
@@ -49,6 +50,7 @@ module.exports = function (app) {
             return res.send(data);
         });
     })
+
     app.post('/weixin', function(req, res) {
         console.log('weixin req:', req.body);
         weixin.exec(req.body, function(err, data) {

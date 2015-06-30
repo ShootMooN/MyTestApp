@@ -9,7 +9,7 @@ exports.exec = function(params, cb) {
     }
 }
 
-// ÑéÖ¤Ç©Ãû
+// éªŒè¯ç­¾å
 var checkSignature = function(signature, timestamp, nonce, echostr, cb) {
     var oriStr = [config.token, timestamp, nonce].sort().join('')
     var code = crypto.createHash('sha1').update(oriStr).digest('hex');
@@ -25,7 +25,7 @@ var checkSignature = function(signature, timestamp, nonce, echostr, cb) {
     }
 }
 
-// ½ÓÊÕÆÕÍ¨ÏûÏ¢
+// æ¥æ”¶æ™®é€šæ¶ˆæ¯
 var receiveMessage = function(msg, cb) {
     var result = {
         xml: {
@@ -33,7 +33,7 @@ var receiveMessage = function(msg, cb) {
             FromUserName: '' + msg.xml.ToUserName + '',
             CreateTime: new Date().getTime(),
             MsgType: 'text',
-            Content: 'ÄãºÃ£¬Äã·¢µÄÄÚÈİÊÇ¡¸' + msg.xml.Content + '¡¹¡£'
+            Content: 'ä½ å¥½ï¼Œä½ å‘çš„å†…å®¹æ˜¯ã€Œ' + msg.xml.Content + 'ã€ã€‚'
         }
     }
     cb(null, result);
