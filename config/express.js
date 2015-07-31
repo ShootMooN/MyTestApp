@@ -1,11 +1,11 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cloud = require('./cloud');
 var compress = require('compression');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var AV = require('leanengine');
+var avosExpressCookieSession = require('avos-express-cookie-session');
 //var passport = require('passport');
 
 module.exports = function () {
@@ -31,9 +31,12 @@ module.exports = function () {
     }));
 
     // 加载云代码方法
-    app.use(cloud);
+    app.use(AV.Cloud);
     
-    app.use(AV.Cloud.CookieSession); 
+    // 启用 cookieParser
+    app.use(express.cookieParser('abcdefg'));
+    // 使用 avos-express-cookie-session 记录登录信息到 cookie
+    app.use(avosExpressCookieSession({ cookie: { maxAge: 3600000 }}));
 
     //app.use(passport.initialize());
     //app.use(passport.session());

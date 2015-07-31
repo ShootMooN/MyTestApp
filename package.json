@@ -23,6 +23,7 @@
     "express-session": "~1.11.3",
     "xml2js": "~0.4.9",
     "passport": "~0.2.2",
-    "leanengine": "^0.1.0"
+    "leanengine": "^0.1.0",
+    "avos-express-cookie-session": "^0.1.3"
   }
 }
