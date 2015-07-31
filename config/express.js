@@ -5,7 +5,6 @@ var compress = require('compression');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var AV = require('leanengine');
-var avosExpressCookieSession = require('avos-express-cookie-session');
 //var passport = require('passport');
 
 module.exports = function () {
@@ -22,7 +21,7 @@ module.exports = function () {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
     app.use(methodOverride());
-    app.use(cookieParser("abcdefgh"));
+    app.use(cookieParser());
 
     app.use(session({
         saveUninitialized: true,
@@ -34,7 +33,7 @@ module.exports = function () {
     app.use(AV.Cloud);
     
     // 使用 avos-express-cookie-session 记录登录信息到 cookie
-    app.use(avosExpressCookieSession({ cookie: { maxAge: 3600000 }}));
+    app.use(AV.Cloud.CookieSession({ secret: 'abcdefgh', maxAge: 3600000, fetchUser: false }));
 
     //app.use(passport.initialize());
     //app.use(passport.session());
