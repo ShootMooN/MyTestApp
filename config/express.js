@@ -33,8 +33,6 @@ module.exports = function () {
     // 加载云代码方法
     app.use(AV.Cloud);
     
-    // 启用 cookieParser
-    app.use(express.cookieParser('abcdefg'));
     // 使用 avos-express-cookie-session 记录登录信息到 cookie
     app.use(avosExpressCookieSession({ cookie: { maxAge: 3600000 }}));
 
