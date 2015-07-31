@@ -5,6 +5,7 @@ var cloud = require('./cloud');
 var compress = require('compression');
 var methodOverride = require('method-override');
 var session = require('express-session');
+//var passport = require('passport');
 
 module.exports = function () {
     var app = express();
@@ -31,8 +32,12 @@ module.exports = function () {
     // 加载云代码方法
     app.use(cloud);
 
+    //app.use(passport.initialize());
+    //app.use(passport.session());
+
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/weixin.server.routes.js')(app);
+    require('../app/routes/users.server.routes.js')(app);
 
     app.use(function(req, res, next) {
         var err = new Error('Not Found');
