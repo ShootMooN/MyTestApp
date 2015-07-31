@@ -5,6 +5,7 @@ var cloud = require('./cloud');
 var compress = require('compression');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var AV = require('leanengine');
 //var passport = require('passport');
 
 module.exports = function () {
@@ -31,6 +32,8 @@ module.exports = function () {
 
     // 加载云代码方法
     app.use(cloud);
+    
+    app.use(AV.Cloud.CookieSession); 
 
     //app.use(passport.initialize());
     //app.use(passport.session());
