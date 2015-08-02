@@ -5,7 +5,8 @@ var compress = require('compression');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var AV = require('leanengine');
-//var passport = require('passport');
+var passport = require('passport');
+var flash = require('connect-flash');
 
 module.exports = function () {
     var app = express();
@@ -13,10 +14,6 @@ module.exports = function () {
     if(app.get('env') === 'production'){
         app.use(compress());
     }
-
-    app.set('views', './app/views');
-    app.set('view engine', 'ejs');
-    app.use(express.static('./public'));
 
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
@@ -28,15 +25,20 @@ module.exports = function () {
         resave: true,
         secret: 'SessionSecret'
     }));
+    
+    app.set('views', './app/views');
+    app.set('view engine', 'ejs');
+    app.use(express.static('./public'));
+    
+    app.use(flash());
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     // 加载云代码方法
     app.use(AV.Cloud);
     
     // 使用 avos-express-cookie-session 记录登录信息到 cookie
     app.use(AV.Cloud.CookieSession({ secret: 'abcdefgh', maxAge: 3600000, fetchUser: false }));
-
-    //app.use(passport.initialize());
-    //app.use(passport.session());
 
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/weixin.server.routes.js')(app);
