@@ -1,5 +1,5 @@
 ﻿var passport = require('passport'),
-    users = require('../controllers/users.server.controller')
+    users = require('../../app/controllers/users.server.controller')
     WechatStrategy = require('passport-wechat');
 
 module.exports = function (){
