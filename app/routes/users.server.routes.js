@@ -15,4 +15,13 @@ module.exports = function (app) {
         }));
 
     app.get('/signout', users.signout);
+
+    app.get('/oauth/wechat', passport.authenticate('wechat', {
+        failureRedirect: '/signin'
+    }));
+
+    app.get('/oauth/wechat/callback', passport.authenticate('wechat',{
+        failureRedirect: '/signin',
+        successRedirect: '/'
+    }));
 };

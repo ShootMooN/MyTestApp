@@ -72,6 +72,63 @@ exports.signout = function(req, res) {
     res.redirect('/');
 };
 
+exports.saveOAuthUserProfile = function (profile, done) {
+    var providerUsername = profile.provider + "_" + profile.providerId;
+    
+    User.logIn(providerUsername, "123456", {
+        success: function (user) {
+            return done(null, user);
+        },
+        error: function (user, error) {
+            var user = new AV.User();
+            user.set("username", providerUsername);
+            user.set("password", "123456");
+            user.signUp(null, {
+                success: function (user) {
+                    AV.User.logIn(providerUsername, "123456", {
+                        success: function (user) {
+                            return done(null, user);
+                        },
+                        error: function (user, error) {
+                            return done(error);
+                        }
+                    });
+                },
+                error: function (user, error) {
+                    return done(error);
+                }
+            });
+        }
+    });
+
+    var query = new AV.Query(AV.User);
+    query.equalTo("username", providerUsername);
+    query.first({
+        success: function (user) {
+            if (!user) {
+                var user = new AV.User();
+                user.set("username", providerUsername);
+                user.set("password", "123456");
+
+                user.signUp(null, {
+                    success: function (user) {
+                        res.json(user);
+                    },
+                    error: function (user, error) {
+                        return done(error);
+                    }
+                });
+            }
+            else {
+                return done(null, user);
+            }
+        },
+        error: function (user, error) {
+            return done(error);
+        }
+    });
+};
+
 /*
 exports.create = function (req, res, next) {
     var user = new AV.User();
