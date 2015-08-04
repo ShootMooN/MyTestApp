@@ -6,7 +6,7 @@ module.exports = function (){
         appid: 'wxeca0bcfec760c197',
         appsecret: 'ec86d680d019c02f88d7cf80fce30d91',
         callbackURL: 'http://shootmoon.avosapps.com/oauth/wechat/callback',
-        scope: 'weixinCourse',
+        scope: 'snsapi_base',
         state: true
     }, function (openid, profile, token, done) {
         var providerUserProfile = {
