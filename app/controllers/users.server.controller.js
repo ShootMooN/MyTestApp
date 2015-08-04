@@ -100,33 +100,6 @@ exports.saveOAuthUserProfile = function (profile, done) {
             });
         }
     });
-
-    var query = new AV.Query(AV.User);
-    query.equalTo("username", providerUsername);
-    query.first({
-        success: function (user) {
-            if (!user) {
-                var user = new AV.User();
-                user.set("username", providerUsername);
-                user.set("password", "123456");
-
-                user.signUp(null, {
-                    success: function (user) {
-                        res.json(user);
-                    },
-                    error: function (user, error) {
-                        return done(error);
-                    }
-                });
-            }
-            else {
-                return done(null, user);
-            }
-        },
-        error: function (user, error) {
-            return done(error);
-        }
-    });
 };
 
 /*
