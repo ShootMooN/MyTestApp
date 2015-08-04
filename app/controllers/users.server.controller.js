@@ -75,7 +75,7 @@ exports.signout = function(req, res) {
 exports.saveOAuthUserProfile = function (profile, done) {
     var providerUsername = profile.provider + "_" + profile.providerId;
     
-    User.logIn(providerUsername, "123456", {
+    AV.User.logIn(providerUsername, "123456", {
         success: function (user) {
             return done(null, user);
         },
