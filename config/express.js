@@ -38,7 +38,7 @@ module.exports = function () {
     app.use(AV.Cloud);
     
     // 使用 avos-express-cookie-session 记录登录信息到 cookie
-    app.use(AV.Cloud.CookieSession({ secret: 'abcdefgh', maxAge: 3600000, fetchUser: false }));
+    //app.use(AV.Cloud.CookieSession({ secret: 'abcdefgh', maxAge: 3600000, fetchUser: false }));
 
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/weixin.server.routes.js')(app);

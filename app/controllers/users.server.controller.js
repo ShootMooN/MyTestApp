@@ -1,5 +1,6 @@
-﻿var AV = require('leanengine'),
-    passport = require('passport');
+﻿var AV = require('leanengine');
+var passport = require('passport');
+var User  = AV.Object.extend("Guest");
 
 var getErrorMessage = function(err) {
     var message = '';
@@ -45,10 +46,11 @@ exports.renderSignup = function(req, res, next) {
 
 exports.signup = function(req, res, next) {
     if (!req.user) {
-        var user = new AV.User();
+        var user = new User();
         user.set("username", req.body.username);
         user.set("password", req.body.password);
-        user.signUp(null, {
+        user.set("provider", "local");
+        user.save(null, {
             success: function (user) {
                 req.login(user, function(err) {
                     if (err)
@@ -73,33 +75,57 @@ exports.signout = function(req, res) {
 };
 
 exports.saveOAuthUserProfile = function (profile, done) {
-    var providerUsername = profile.provider + "_" + profile.providerId;
-    
-    AV.User.logIn(providerUsername, "123456", {
-        success: function (user) {
-            return done(null, user);
+    var query = new AV.Query(User);
+    query.equalTo("username", profile.providerId);
+    query.equalTo("provider", profile.provider);
+    query.first({
+        success: function (queryObject) {
+            if (!queryObject) {
+                var user = new User();
+                user.set("username", profile.providerId);
+                user.set("provider", profile.provider);
+                user.save(null, {
+                    success: function (saveObject) {
+                        return done(null, saveObject);
+                    },
+                    error: function (saveObject, error) {
+                        return done(error);
+                    }
+                });
+            } else {
+                return done(null, queryObject);
+            }
         },
-        error: function (user, error) {
-            var user = new AV.User();
-            user.set("username", providerUsername);
-            user.set("password", "123456");
-            user.signUp(null, {
-                success: function (user) {
-                    AV.User.logIn(providerUsername, "123456", {
-                        success: function (user) {
-                            return done(null, user);
-                        },
-                        error: function (user, error) {
-                            return done(error);
-                        }
-                    });
-                },
-                error: function (user, error) {
-                    return done(error);
-                }
-            });
+        error: function (error) {
+            return done(error);
         }
     });
+
+    //AV.User.logIn(providerUsername, "123456", {
+    //    success: function (user) {
+    //        return done(null, user);
+    //    },
+    //    error: function (user, error) {
+    //        var user = new AV.User();
+    //        user.set("username", providerUsername);
+    //        user.set("password", "123456");
+    //        user.signUp(null, {
+    //            success: function (user) {
+    //                AV.User.logIn(providerUsername, "123456", {
+    //                    success: function (user) {
+    //                        return done(null, user);
+    //                    },
+    //                    error: function (user, error) {
+    //                        return done(error);
+    //                    }
+    //                });
+    //            },
+    //            error: function (user, error) {
+    //                return done(error);
+    //            }
+    //        });
+    //    }
+    //});
 };
 
 /*

@@ -1,5 +1,6 @@
-var passport = require('passport'),
-    AV = require('leanengine');
+var passport = require('passport');
+var AV = require('leanengine');
+var User = AV.Object.extend("Guest");
 
 module.exports = function () {
     passport.serializeUser(function (user, done) {
@@ -7,7 +8,7 @@ module.exports = function () {
     });
     
     passport.deserializeUser(function (id, done) {
-        var query = new AV.Query(AV.User);
+        var query = new AV.Query(User);
         query.get(id, {
             success: function (user) {
                 done(null, user);
