@@ -84,6 +84,7 @@ exports.saveOAuthUserProfile = function (profile, done) {
                 var user = new User();
                 user.set("username", profile.providerId);
                 user.set("provider", profile.provider);
+                user.set("nickname", profile.nickname);
                 user.save(null, {
                     success: function (saveObject) {
                         return done(null, saveObject);

@@ -7,12 +7,13 @@ module.exports = function (){
         appid: 'wxeca0bcfec760c197',
         appsecret: 'ec86d680d019c02f88d7cf80fce30d91',
         callbackURL: 'http://shootmoon.avosapps.com/oauth/wechat/callback',
-        scope: 'snsapi_base',
+        scope: 'snsapi_userinfo',
         state: true
     }, function (openid, profile, token, done) {
         var providerUserProfile = {
             provider: 'wechat',
-            providerId: openid
+            providerId: openid,
+            nickname: profile.nickname
         };
         users.saveOAuthUserProfile(providerUserProfile, done);
     }));
