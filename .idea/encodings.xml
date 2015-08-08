@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/app/controllers/index.server.controller.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/controllers/weixin.server.controller.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/routes/index.server.routes.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/routes/weixin.server.routes.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config/cloud.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config/express.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config/weixin.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/package.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/server.js" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
