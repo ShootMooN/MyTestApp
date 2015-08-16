@@ -102,6 +102,15 @@ exports.saveOAuthUserProfile = function (profile, done) {
         }
     });
 
+exports.requireLogin = function(req, res, next){
+    if(!req.isAuthenticated()){
+        return res.status(401).send({
+            message: 'User is not logged in'
+        });
+
+        next();
+    }
+}
     //AV.User.logIn(providerUsername, "123456", {
     //    success: function (user) {
     //        return done(null, user);

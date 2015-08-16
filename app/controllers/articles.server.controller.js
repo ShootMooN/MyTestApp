@@ -11,10 +11,10 @@ exports.create = function(req, res) {
     article.set('creator', user);
 
     article.save(null, {
-        success: function(article) {
+        success: function(obj) {
             res.json(article);
         },
-        error: function(article, error) {
+        error: function(obj, error) {
             return res.status(400).send({
                 message: getErrorMessage(error)
             });
@@ -30,6 +30,7 @@ exports.list = function(req, res) {
             for (var i = 0; i < articles.length; i++) {
                 var article = articles[i];
                 var user = article.get('creator');
+                //TODO:creator赋值
             }
 
             res.json(articles);
@@ -54,7 +55,7 @@ exports.articleByID = function(req, res, next, id) {
             }
         },
         error: function(article, error) {
-            return next(error);
+            return next(getErrorMessage(error));
         }
     });
 };
@@ -67,11 +68,11 @@ exports.update = function(req, res) {
     var article = req.article;
     article.set('title', req.body.title);
     article.set('content', req.body.content);
-    post.save(null, {
-        success: function(article) {
+    article.save(null, {
+        success: function(obj) {
             res.json(article);
         },
-        error: function(article, error) {
+        error: function(obj, error) {
             return res.status(400).send({
                 message: getErrorMessage(error)
             });
@@ -82,13 +83,23 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
     var article = req.article;
     article.destroy({
-        success: function(article) {
+        success: function(obj) {
             res.json(article);
         },
-        error: function(article, error) {
+        error: function(obj, error) {
             return res.status(400).send({
                 message: getErrorMessage(error)
             });
         }
     });
 };
+
+exports.hasAuthorization = function(req, res, next){
+    if(req.article.creator.id !== req.user.id){
+        return res.status(403).send({
+            message: 'User is not authorized'
+        });
+    }
+
+    next();
+}
