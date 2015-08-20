@@ -101,16 +101,17 @@ exports.saveOAuthUserProfile = function (profile, done) {
             return done(error);
         }
     });
+};
 
-exports.requireLogin = function(req, res, next){
-    if(!req.isAuthenticated()){
+exports.requiresLogin = function(req, res, next){
+    if(!req.isAuthenticated()) {
         return res.status(401).send({
             message: 'User is not logged in'
         });
+    }
 
         next();
-    }
-}
+};
     //AV.User.logIn(providerUsername, "123456", {
     //    success: function (user) {
     //        return done(null, user);
@@ -136,7 +137,7 @@ exports.requireLogin = function(req, res, next){
     //        });
     //    }
     //});
-};
+//};
 
 /*
 exports.create = function (req, res, next) {

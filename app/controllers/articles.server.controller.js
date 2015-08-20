@@ -9,9 +9,11 @@ exports.create = function(req, res) {
     var article = Article.new(req.body);
     var user = AV.Object.createWithoutData("Guest", req.user.id);
     article.set('creator', user);
+    article.set('creatorName', req.user.get('nickname'));
 
     article.save(null, {
         success: function(obj) {
+            article.set('creator', req.user);
             res.json(article);
         },
         error: function(obj, error) {
@@ -27,17 +29,11 @@ exports.list = function(req, res) {
     query.ascending('createdAt');
     query.find({
         success: function(articles) {
-            for (var i = 0; i < articles.length; i++) {
-                var article = articles[i];
-                var user = article.get('creator');
-                //TODO:creator赋值
-            }
-
             res.json(articles);
         },
         error: function(error) {
             return res.status(400).send({
-                message: getErrorMessage(err)
+                message: getErrorMessage(error)
             });
         }
     });
@@ -95,11 +91,11 @@ exports.delete = function(req, res) {
 };
 
 exports.hasAuthorization = function(req, res, next){
-    if(req.article.creator.id !== req.user.id){
+    if(req.article.get('creator').id !== req.user.id){
         return res.status(403).send({
             message: 'User is not authorized'
         });
     }
 
     next();
-}
+};

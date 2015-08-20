@@ -43,7 +43,7 @@ module.exports = function () {
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/weixin.server.routes.js')(app);
     require('../app/routes/users.server.routes.js')(app);
-    require('../app/routes/article.server.routes.js')(app);
+    require('../app/routes/articles.server.routes.js')(app);
 
     app.use(function(req, res, next) {
         var err = new Error('Not Found');
