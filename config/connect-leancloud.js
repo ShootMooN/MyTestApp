@@ -5,7 +5,7 @@ module.exports = function (session){
   var Error = require('errno-codes');
 
 
-  function ParseStore(options) {
+  function LeanStore(options) {
     options = options || {};
     Store.call(this, options);
 
@@ -14,57 +14,64 @@ module.exports = function (session){
     this.parseClassName = options.parseClassName || 'Session';
   }
 
+  LeanStore.prototype.__proto__ = Store.prototype;
 
-  ParseStore.prototype.__proto__ = Store.prototype;
-
-
-  ParseStore.prototype.get_ = function(id, callback) {
+  LeanStore.prototype.get_ = function(id, callback) {
     var self = this;
     var Session = AV.Object.extend(this.parseClassName);
     var query = new AV.Query(Session);
 
     query.equalTo('identity', id);
     query.first({
-            success: function (foundSession) {
-              if (!foundSession) {
-                callback(Error.get(Error.ENOENT));
-
-              } else if (foundSession.get('destroyAt') < new Date()) {
-                self.destroy(foundSession)
-                callback(Error.get(Error.ENOENT));
-
-              } else {
+            success: function (foundSession)
+            {
+              if (!foundSession)
+              {
+                callback(Error.get(Error.ENOENT), null);
+              }
+              else if (foundSession.get('destroyAt') < new Date())
+              {
+                self.destroy(foundSession, callback)
+              }
+              else
+              {
                 callback(null, foundSession);
               }
             },
-            error: function (error) {
-                callback(Error.get(Error.ENOENT));
+            error: function (error)
+            {
+              callback(error, null);
             }
         });
   };
 
-
-  ParseStore.prototype.get = function(id, callback) {
-    this.get_(id, function(error, foundSession) {
+  LeanStore.prototype.get = function(id, callback)
+  {
+    this.get_(id, function(error, foundSession)
+    {
       callback(error, foundSession ? foundSession.get('data') : null);
     });
   };
 
-
-  ParseStore.prototype.set = function(id, session, callback) {
+  LeanStore.prototype.set = function(id, session, callback)
+  {
     var self = this;
 
     this.get_(id, function(error, foundSession) {
-      if (error) {
+      if (!foundSession)
+      {
         var Session = AV.Object.extend(self.parseClassName);
         var newSession = new Session();
         var destroyAt = new Date();
 
-        if (!self.ttl) {
-          if (typeof session.cookie.maxAge === 'number') {
+        if (!self.ttl)
+        {
+          if (typeof session.cookie.maxAge === 'number')
+          {
             self.ttl = session.cookie.maxAge / 1000 | 0;
-
-          } else {
+          }
+          else
+          {
             self.ttl = 86400;
           }
         }
@@ -75,48 +82,35 @@ module.exports = function (session){
         newSession.set('data', session);
         newSession.set('destroyAt', destroyAt);
 
-        newSession.save().then(function(newSession) {
-          callback(null, newSession.get('data'));
-
-        }, callback);
-
-      } else {
-        callback(null, foundSession.get('data'));
+        newSession.save(null, {
+          success: function(newSession) {
+            callback(null);
+          },
+          error: function(newSession, error) {
+            callback(error);
+          }
+        });
+      }
+      else
+      {
+        foundSession.set('data', session);
+        foundSession.save();
+        callback(null);
       }
     });
   };
 
-
-  ParseStore.prototype.destroy_ = function(session, opt_callback) {
-    opt_callback = opt_callback || function() {};
-
-    session.destroy().then(function() {
-      console.log(arguments);
-      opt_callback(null);
-
-    }, opt_callback);
+  LeanStore.prototype.destroy = function(session, callback)
+  {
+    session.destroy({
+      success: function(myObject) {
+        callback(Error.get(Error.ENOENT), null);
+      },
+      error: function(myObject, error) {
+        callback(error, null);
+      }
+    });
   };
 
-
-  ParseStore.prototype.destroy = function(session, callback) {
-    if (typeof session === 'object') {
-      this.destroy_(session, callback);
-
-    } else {
-      this.get_(session, function (error, foundSession) {
-        if (error) {
-          callback(error);
-          return;
-        }
-
-        foundSession.destroy().then(function () {
-          callback(null);
-
-        }, callback);
-      });
-    }
-  };
-
-
-  return ParseStore;
+  return LeanStore;
 };

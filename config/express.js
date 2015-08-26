@@ -7,9 +7,14 @@ var session = require('express-session');
 var AV = require('leanengine');
 var passport = require('passport');
 var flash = require('connect-flash');
+var http = require('http');
+var socketio = require('socket.io');
+var LeanStore = require('./connect-leancloud')(session);
 
 module.exports = function () {
     var app = express();
+    var server = http.createServer(app);
+    var io = socketio.listen(server);
 
     if(app.get('env') === 'production'){
         app.use(compress());
@@ -20,10 +25,13 @@ module.exports = function () {
     app.use(methodOverride());
     app.use(cookieParser());
 
+    var leanStore = new LeanStore();
+
     app.use(session({
         saveUninitialized: true,
         resave: true,
-        secret: 'SessionSecret'
+        secret: 'SessionSecret',
+        store: leanStore
     }));
     
     app.set('views', './app/views');
@@ -69,5 +77,7 @@ module.exports = function () {
         });
     }
 
-    return app;
+    require('./socketio')(server, io, leanStore);
+
+    return server;
 }
