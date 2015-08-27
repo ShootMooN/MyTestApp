@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        <%=title %>
+    </title>
+</head>
+<body>
+<% for(var i in messages) { %>
+<div class="flash"><%= messages[i] %></div>
+<% } %>
+<form action="/update" method="post">
+    <div>
+        <label>Realname:</label>
+        <input type="text" name="realname" />
+    </div>
+    <div>
+        <input type="submit" value="Update" />
+    </div>
+</form>
+</body>
+</html>

@@ -3,13 +3,13 @@ module.exports = function(io, socket) {
         type: 'status',
         text: 'connected',
         created: Date.now(),
-        username: socket.request.user.username
+        username: socket.request.user.get('nickname')
     });
 
     socket.on('chatMessage', function(message) {
         message.type = 'message';
         message.created = Date.now();
-        message.username = socket.request.user.username;
+        message.username = socket.request.user.get('nickname');
         io.emit('chatMessage', message);
     });
 
@@ -18,7 +18,7 @@ module.exports = function(io, socket) {
             type: 'status',
             text: 'disconnected',
             created: Date.now(),
-            username: socket.request.user.username
+            username: socket.request.user.get('nickname')
         });
     });
 };

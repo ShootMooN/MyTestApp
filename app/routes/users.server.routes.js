@@ -14,6 +14,10 @@ module.exports = function (app) {
             failureFlash: true
         }));
 
+    app.route('/update')
+        .get(users.renderUpdate)
+        .post(users.update);
+
     app.get('/signout', users.signout);
 
     app.get('/oauth/wechat', passport.authenticate('wechat', {

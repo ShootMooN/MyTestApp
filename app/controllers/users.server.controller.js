@@ -2,24 +2,8 @@
 var passport = require('passport');
 var User  = AV.Object.extend("Guest");
 
-var getErrorMessage = function(err) {
-    var message = '';
-    if (err.code) {
-        switch (err.code) {
-            case 11000:
-            case 11001:
-                message = 'Username already exists';
-                break;
-            default:
-                message = 'Something went wrong';
-        }
-    } else {
-        for (var errName in err.errors) {
-            if (err.errors[errName].message) message = err.errors[errName].
-                message;
-        }
-    }
-    return message;
+var getErrorMessage = function(error) {
+    return "Error: " + error.code + " " + error.message
 };
 
 exports.renderSignin = function(req, res, next) {
@@ -37,6 +21,18 @@ exports.renderSignup = function(req, res, next) {
     if (!req.user) {
         res.render('signup', {
             title: 'Sign-up Form',
+            messages: req.flash('error')
+        });
+    } else {
+        return res.redirect('/');
+    }
+};
+
+exports.renderUpdate = function(req, res, next) {
+    if (req.user && !req.user.get('realname'))
+    {
+        res.render('update', {
+            title: 'Update Form',
             messages: req.flash('error')
         });
     } else {
@@ -67,6 +63,21 @@ exports.signup = function(req, res, next) {
     } else {
         return res.redirect('/');
     }
+};
+
+exports.update = function(req, res) {
+    var user = req.user;
+    user.set('realname', req.body.realname);
+    user.save(null, {
+        success: function (user) {
+            return res.redirect('/');
+        },
+        error: function (user, error) {
+            var message = getErrorMessage(error);
+            req.flash('error', message);
+            return res.redirect('/update');
+        }
+    });
 };
 
 exports.signout = function(req, res) {
