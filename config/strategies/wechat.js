@@ -10,6 +10,8 @@ module.exports = function (){
         scope: 'snsapi_userinfo',
         state: true
     }, function (openid, profile, token, done) {
+        console.log(JSON.stringify(profile));
+
         var providerUserProfile = {
             provider: 'wechat',
             providerId: openid,
