@@ -4,18 +4,30 @@
     <title>
         <%=title %>
     </title>
+    
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+
+    <link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-hover.css" />
+    <link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-base.css" />
+    <link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-desktop.css" />
 </head>
+
 <body>
 <% for(var i in messages) { %>
 <div class="flash"><%= messages[i] %></div>
 <% } %>
+
 <form action="/update" method="post">
-    <div>
-        <label>Realname:</label>
-        <input type="text" name="realname" />
+    <div class="form-group">
+        <label>请留下您的真实姓名</label>
+        <input type="text" name="realname" class="form-control"/>
     </div>
+
     <div>
-        <input type="submit" value="Update" />
+
+        <button class="btn btn-primary btn-block">
+            提交
+        </button>
     </div>
 </form>
 </body>
