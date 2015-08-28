@@ -14,7 +14,7 @@ module.exports = function (){
             provider: 'wechat',
             providerId: openid,
             nickname: profile.nickname,
-            headimgurl: JSON.stringify(profile)
+            headimgurl: profile.headimgurl
         };
         users.saveOAuthUserProfile(providerUserProfile, done);
     }));
