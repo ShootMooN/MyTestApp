@@ -4,31 +4,42 @@
     <title>
         <%=title %>
     </title>
-    
+
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
 
-    <link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-hover.css" />
-    <link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-base.css" />
-    <link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-desktop.css" />
+    <!--<link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-hover.css" />-->
+    <!--<link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-base.css" />-->
+    <!--<link rel="stylesheet" href="/lib/mobile-angular-ui/dist/css/mobile-angular-ui-desktop.css" />-->
+
+    <link rel="stylesheet" href="/lib/ionic/css/ionic.min.css" />
 </head>
 
 <body>
-<% for(var i in messages) { %>
-<div class="flash"><%= messages[i] %></div>
-<% } %>
+    <% for(var i in messages) { %>
+    <div class="flash"><%= messages[i] %></div>
+    <% } %>
 
-<form action="/update" method="post">
-    <div class="form-group">
-        <label>请留下您的真实姓名</label>
-        <input type="text" name="realname" class="form-control"/>
-    </div>
+    <form action="/update" method="post">
+        <!--<div class="form-group">-->
+            <!--<label>请留下您的真实姓名</label>-->
+            <!--<input type="text" name="realname" class="form-control"/>-->
+        <!--</div>-->
 
-    <div>
+        <!--<div>-->
+            <!--<button class="btn btn-primary btn-block">-->
+                <!--提交-->
+            <!--</button>-->
+        <!--</div>-->
 
-        <button class="btn btn-primary btn-block">
-            提交
-        </button>
-    </div>
-</form>
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="请输入您的姓名" name="realname">
+            </label>
+            <button class="button button-block button-positive">
+                提 交
+            </button>
+        </div>
+    </form>
+
 </body>
 </html>

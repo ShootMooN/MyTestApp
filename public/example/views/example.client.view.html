@@ -4,12 +4,19 @@
         <!--<a href="/signin">Signin</a>-->
     <!--</div>-->
     <div data-ng-show="authentication.user">
-        <h1>Hello <span data-ng-bind="authentication.user.realname"></span></h1>
+        <div class="bar bar-header bar-stable">
+            <h1 class="title">你好 <span data-ng-bind="authentication.user.realname"></span></h1>
+        </div>
+
         <!--<a href="/signout">Signout</a>-->
-        <ul>
-            <li><a href="/#!/chat">Chat</a></li>
+        <!--<ul>-->
+            <!--<li><a href="/#!/chat">Chat</a></li>-->
             <!--<li><a href="/#!/articles">List Articles</a></li>-->
             <!--<li><a href="/#!/articles/create">Create Article</a></li>-->
-        </ul>
+        <!--</ul>-->
+
+        <div class="bar bar-footer bar-balanced">
+            <a class="title" href="/#!/chat">点击此处送上祝福</a>
+        </div>
     </div>
 </section>
