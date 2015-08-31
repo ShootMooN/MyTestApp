@@ -1,10 +1,11 @@
 angular.module('chat').controller('ChatController', ['$scope',
-    'Socket',
-    function($scope, Socket) {
+    'Socket', '$ionicScrollDelegate',
+    function($scope, Socket, $ionicScrollDelegate) {
         $scope.messages = [];
 
         Socket.on('chatMessage', function(message) {
             $scope.messages.push(message);
+            $ionicScrollDelegate.scrollBottom();
         });
 
         $scope.sendMessage = function() {
