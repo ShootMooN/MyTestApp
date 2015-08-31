@@ -13,15 +13,16 @@
         </ion-list>
     </ion-content>
 
-    <form ng-submit="sendMessage();">
-        <div class="bar bar-footer item-input-inset">
-            <label class="item-input-wrapper">
-                <input type="text" data-ng-model="messageText">
-            </label>
-            <button class="button button-small button-positive">
-                提交
-            </button>
-        </div>
-    </form>
-
+    <ion-footer-bar>
+        <form ng-submit="sendMessage();">
+            <div class="bar bar-footer item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" data-ng-model="messageText">
+                </label>
+                <button class="button button-small button-positive">
+                    提交
+                </button>
+            </div>
+        </form>
+    </ion-footer-bar>
 </section>

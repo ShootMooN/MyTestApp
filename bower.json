@@ -4,7 +4,6 @@
   "dependencies": {
     "angular": "~1.2",
     "angular-route": "~1.2",
-    "angular-resource": "~1.2",
-	"mobile-angular-ui": "~1.2"
+    "angular-resource": "~1.2"
   }
 }
