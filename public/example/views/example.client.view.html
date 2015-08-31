@@ -4,9 +4,9 @@
         <!--<a href="/signin">Signin</a>-->
     <!--</div>-->
     <div data-ng-show="authentication.user">
-        <div class="bar bar-header bar-stable">
+        <ion-header-bar class="bar-stable">
             <h1 class="title">你好 <span data-ng-bind="authentication.user.realname"></span></h1>
-        </div>
+        </ion-header-bar>
 
         <!--<a href="/signout">Signout</a>-->
         <!--<ul>-->
@@ -15,8 +15,12 @@
             <!--<li><a href="/#!/articles/create">Create Article</a></li>-->
         <!--</ul>-->
 
-        <div class="bar bar-footer bar-balanced">
+        <ion-content>
+
+        </ion-content>
+
+        <ion-footer-bar class="bar-positive">
             <a class="title" href="/#!/chat">点击此处送上祝福</a>
-        </div>
+        </ion-footer-bar>
     </div>
 </section>

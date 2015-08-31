@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title><%=title %></title>
+    <title></title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -10,9 +10,6 @@
 </head>
 
 <body>
-    <% for(var i in messages) { %>
-    <div class="flash"><%= messages[i] %></div>
-    <% } %>
 
     <form action="/update" method="post">
         <div class="list list-inset">
