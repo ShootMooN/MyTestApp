@@ -1,4 +1,5 @@
 var AV = require('leanengine');
+var Session = AV.Object.extend('Session');
 
 module.exports = function (session){
   var Store = session.Store;
@@ -18,7 +19,6 @@ module.exports = function (session){
 
   LeanStore.prototype.get_ = function(id, callback) {
     var self = this;
-    var Session = AV.Object.extend(this.parseClassName);
     var query = new AV.Query(Session);
 
     query.equalTo('identity', id);
@@ -60,7 +60,6 @@ module.exports = function (session){
     this.get_(id, function(error, foundSession) {
       if (!foundSession)
       {
-        var Session = AV.Object.extend(self.parseClassName);
         var newSession = new Session();
         var destroyAt = new Date();
 
