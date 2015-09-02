@@ -18,10 +18,10 @@ module.exports = function(io, socket) {
                 var chat = chats[i];
                 socket.emit('chatMessage', {
                     type: 'message',
-                    text: chats[chat].get('text'),
-                    created: chats[chat].get('created'),
-                    username: chats[chat].get('username'),
-                    headimgurl: chats[chat].get('headimgurl')
+                    text: chat.get('text'),
+                    created: chat.get('created'),
+                    username: chat.get('username'),
+                    headimgurl: chat.get('headimgurl')
                 });
             }
         },
