@@ -7,12 +7,24 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
     <link rel="stylesheet" href="/lib/ionic/css/ionic.min.css" />
+
+    <style>
+        body{width:100%;overflow-x:hidden;}
+        .wrapper{width:12rem;overflow:hidden;margin:0 auto;padding-bottom:1rem;}
+
+        .t-banner img{display:block;width:100%;}
+    </style>
 </head>
 
 <body>
+    <div class="wrapper">
+        <div class="t-banner">
+            <img src="/img/1.png">
+        </div>
+    </div>
 
     <form action="/update" method="post">
-        <div class="list list-inset">
+        <div class="list list-inset ">
             <label class="item item-input">
                 <input type="text" placeholder="请输入您的姓名" name="realname">
             </label>
@@ -21,6 +33,5 @@
             </button>
         </div>
     </form>
-
 </body>
 </html>
