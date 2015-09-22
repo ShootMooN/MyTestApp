@@ -3,8 +3,14 @@
         <!--<a href="/signup">Signup</a>-->
         <!--<a href="/signin">Signin</a>-->
     <!--</div>-->
+
+    <style>
+        .wrapper{position: absolute;width:12rem;height:12rem;left:50%;top:50%;margin-left:-6rem;margin-top:-6rem;}
+        .wrapper img{display:block;width:100%;}
+    </style>
+
     <div data-ng-show="authentication.user">
-        <ion-header-bar class="bar-stable">
+        <ion-header-bar class="bar-positive">
             <h1 class="title">你好 <span data-ng-bind="authentication.user.realname"></span></h1>
         </ion-header-bar>
 
@@ -14,10 +20,10 @@
             <!--<li><a href="/#!/articles">List Articles</a></li>-->
             <!--<li><a href="/#!/articles/create">Create Article</a></li>-->
         <!--</ul>-->
+        <div class="wrapper">
+            <img src="/img/1.png">
+        </div>
 
-        <ion-content>
-
-        </ion-content>
 
         <ion-footer-bar class="bar-positive">
             <a class="title" href="/#!/chat">点击此处送上祝福</a>
