@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="/lib/ionic/css/ionic.min.css" />
 
     <style>
-        .wrapper{width:12rem;overflow:hidden;margin:0 auto;padding-bottom:1rem;padding-top:2rem;}
+        .wrapper{width:12rem;overflow:hidden;margin:0 auto;padding-bottom:1rem;padding-top:2rem;opacity:0;}
         .wrapper img{display:block;width:100%;}
+        .list{top:-100px;opacity:0;}
     </style>
+
+    <script type="text/javascript" src="/lib/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body>
@@ -20,7 +23,7 @@
     </div>
 
     <form action="/update" method="post">
-        <div class="list list-inset ">
+        <div class="list list-inset">
             <label class="item item-input">
                 <input type="text" placeholder="请输入您的姓名" name="realname">
             </label>
@@ -29,5 +32,20 @@
             </button>
         </div>
     </form>
+
+    <script type="text/javascript">
+        var main = function() {
+                $('.list').animate({
+                    top: "0px",
+                    opacity: "1"
+                }, 1000);
+
+            $('.wrapper').delay(500).animate({
+                opacity: "1"
+            }, 500);
+        };
+
+        $(document).ready(main);
+    </script>
 </body>
 </html>
